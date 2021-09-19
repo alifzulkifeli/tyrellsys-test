@@ -61,6 +61,9 @@ export default function Home() {
 						<div className=" p-4 ">
 							<h1 className="font-bold" >{`player ${index + 1}:`}</h1>
 							{singleList.map((card, indx) => {
+                if (indx % 10 == 0) {
+                  return <br/>
+                }
 								return <span>{`${card},`}</span>;
 							})}
 						</div>
