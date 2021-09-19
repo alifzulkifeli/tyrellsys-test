@@ -1,82 +1,71 @@
-import Head from 'next/head'
+import axios from "axios";
+import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 
 export default function Home() {
-  return (
-    <div className="flex flex-col items-center justify-center min-h-screen py-2">
-      <Head>
-        <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+	const [list, setList] = useState();
+	const [noPlayer, setNoPlayer] = useState();
 
-      <main className="flex flex-col items-center justify-center w-full flex-1 px-20 text-center">
-        <h1 className="text-6xl font-bold">
-          Welcome to{' '}
-          <a className="text-blue-600" href="https://nextjs.org">
-            Next.js!
-          </a>
-        </h1>
+	const getData = async () => {
+		if (noPlayer < 1 || isNaN(filterInt(noPlayer))) {
+			toast.error("Input value does not exist or value is invalid");
+      setList();
+		} else {
+			const arrayList = [];
+			const result = await axios(
+				`http://tyrellsys-test-1.herokuapp.com/getCardList/${noPlayer}`
+			);
 
-        <p className="mt-3 text-2xl">
-          Get started by editing{' '}
-          <code className="p-3 font-mono text-lg bg-gray-100 rounded-md">
-            pages/index.js
-          </code>
-        </p>
+			for (const singleList in result.data) {
+				arrayList.push(result.data[singleList]);
+			}
+			setList(arrayList);
+		}
+	};
 
-        <div className="flex flex-wrap items-center justify-around max-w-4xl mt-6 sm:w-full">
-          <a
-            href="https://nextjs.org/docs"
-            className="p-6 mt-6 text-left border w-96 rounded-xl hover:text-blue-600 focus:text-blue-600"
-          >
-            <h3 className="text-2xl font-bold">Documentation &rarr;</h3>
-            <p className="mt-4 text-xl">
-              Find in-depth information about Next.js features and API.
-            </p>
-          </a>
+  //https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/parseInt#a_stricter_parse_function
+  //there is problem when using parseInt()
+  //eg. "7abc" is not return as NaN
+  function filterInt(value) {
+    if (/^[-+]?(\d+|Infinity)$/.test(value)) {
+      return Number(value)
+    } else {
+      return NaN
+    }
+  }
 
-          <a
-            href="https://nextjs.org/learn"
-            className="p-6 mt-6 text-left border w-96 rounded-xl hover:text-blue-600 focus:text-blue-600"
-          >
-            <h3 className="text-2xl font-bold">Learn &rarr;</h3>
-            <p className="mt-4 text-xl">
-              Learn about Next.js in an interactive course with quizzes!
-            </p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className="p-6 mt-6 text-left border w-96 rounded-xl hover:text-blue-600 focus:text-blue-600"
-          >
-            <h3 className="text-2xl font-bold">Examples &rarr;</h3>
-            <p className="mt-4 text-xl">
-              Discover and deploy boilerplate example Next.js projects.
-            </p>
-          </a>
-
-          <a
-            href="https://vercel.com/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className="p-6 mt-6 text-left border w-96 rounded-xl hover:text-blue-600 focus:text-blue-600"
-          >
-            <h3 className="text-2xl font-bold">Deploy &rarr;</h3>
-            <p className="mt-4 text-xl">
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
-        </div>
-      </main>
-
-      <footer className="flex items-center justify-center w-full h-24 border-t">
-        <a
-          className="flex items-center justify-center"
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className="h-4 ml-2" />
-        </a>
-      </footer>
-    </div>
-  )
+	return (
+		<div className="grid justify-items-center">
+			<div class="flex w-5/6 flex-row md:w-1/2 lg:w-1/4  justify-center mt-10 ">
+				<div class=" relative ">
+					<input
+						type="text"
+						id='"form-subscribe-Subscribe'
+						class=" rounded-lg border-transparent  border border-gray-300 py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-1 focus:ring-purple-600 focus:border-transparent "
+						placeholder="Number of Player"
+						onChange={(e) => setNoPlayer(e.target.value)}
+						value={noPlayer}
+					/>
+				</div>
+				<button
+					class="flex-shrink-0 px-4 py-2 text-base font-semibold text-white bg-purple-600 rounded-lg shadow-md hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-1 focus:ring-offset-purple-200 ml-4"
+					type="submit"
+					onClick={() => getData()}
+				>
+					Play
+				</button>
+			</div>
+			{list &&
+				list.map((singleList, index) => {
+					return (
+						<div className=" p-4 ">
+							<h1 className="font-bold" >{`player ${index + 1}:`}</h1>
+							{singleList.map((card, indx) => {
+								return <span>{`${card},`}</span>;
+							})}
+						</div>
+					);
+				})}
+		</div>
+	);
 }
