@@ -13,7 +13,7 @@ export default function Home() {
 		} else {
 			const arrayList = [];
 			const result = await axios(
-				`http://tyrellsys-test-1.herokuapp.com/getCardList/${noPlayer}`
+				`https://tyrellsys-test-1.herokuapp.com/getCardList/${noPlayer}`
 			);
 
 			for (const singleList in result.data) {
