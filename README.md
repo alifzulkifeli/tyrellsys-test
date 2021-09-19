@@ -1,4 +1,4 @@
-# Tyrell System Test for Interview (Backend)
+# Tyrell System Test for Interview (Frontend)
 
 Using [Next.js](https://nextjs.org/) Framework that based on the React.js and deployed to the [vercel](https://www.vercel.com/)
  
