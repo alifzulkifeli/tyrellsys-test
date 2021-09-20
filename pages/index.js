@@ -45,7 +45,7 @@ export default function Home() {
 				<Loader />
 			) : (
 				<div className="grid justify-items-center">
-					<h1 className="pt-10 text-2xl  ">
+					<h1 className="pt-10 text-2xl p-4 ">
 						Put value in <span className="underline ">
 							Number of Player</span> fields and press <span className="underline">Play</span> button
 					</h1>
