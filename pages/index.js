@@ -71,7 +71,7 @@ export default function Home() {
 									<h1 className="font-bold">{`player ${index + 1}:`}</h1>
 									{singleList.map((card, indx) => {
 										if (indx % 10 == 0) {
-											return <br />;
+											return <hr />;
 										}
 										return <span>{`${card},`}</span>;
 									})}
