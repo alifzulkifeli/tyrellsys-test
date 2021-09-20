@@ -73,7 +73,7 @@ export default function Home() {
 										if (indx % 10 == 0) {
 											return <hr />;
 										}
-										return <span>{`${card},`}</span>;
+										return <span>{`${card}, `}</span>;
 									})}
 								</div>
 							);
