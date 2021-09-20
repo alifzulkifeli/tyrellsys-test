@@ -9,11 +9,11 @@ export default function Home() {
 	const [loading, setLoading] = useState(false);
 
 	const getData = async () => {
-    setLoading(true)
+		setLoading(true);
 		if (noPlayer < 1 || isNaN(filterInt(noPlayer))) {
 			toast.error("Input value does not exist or value is invalid");
 			setList();
-      setLoading(false)
+			setLoading(false);
 		} else {
 			const arrayList = [];
 			const result = await axios(
@@ -25,7 +25,7 @@ export default function Home() {
 			}
 			setList(arrayList);
 		}
-    setLoading(false)
+		setLoading(false);
 	};
 
 	//https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/parseInt#a_stricter_parse_function
@@ -45,6 +45,10 @@ export default function Home() {
 				<Loader />
 			) : (
 				<div className="grid justify-items-center">
+					<h1 className="pt-10 text-2xl  ">
+						Put value in <span className="underline ">
+							Number of Player</span> fields and press <span className="underline">Play</span> button
+					</h1>
 					<div className="flex w-5/6 flex-row md:w-1/2 lg:w-1/4  justify-center mt-10 ">
 						<div className=" relative ">
 							<input
